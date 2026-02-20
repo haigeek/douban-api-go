@@ -56,7 +56,7 @@ jobs:
           OUT_DIR="dist/douban-api-go-${{ matrix.goos }}-${{ matrix.goarch }}"
           mkdir -p "$OUT_DIR"
           CGO_ENABLED=0 GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} \
-            go build -trimpath -ldflags "-s -w" -o "$OUT_DIR/$BIN_NAME" ./cmd/server
+            go build -trimpath -ldflags "-s -w" -o "$OUT_DIR/$BIN_NAME" ./cmd/server/main.go
 
       - name: Package archive
         run: |

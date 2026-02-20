@@ -17,4 +17,4 @@ jobs:
       - name: Go Test
         run: go test ./...
       - name: Go Build
-        run: go build ./cmd/server
+        run: go build -v ./cmd/server/main.go
