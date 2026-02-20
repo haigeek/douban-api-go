@@ -50,21 +50,22 @@ jobs:
           cache: true
 
       - name: Build binary
+        working-directory: cmd/server
         run: |
           mkdir -p dist
           BIN_NAME="douban-api-go${{ matrix.ext }}"
           OUT_DIR="dist/douban-api-go-${{ matrix.goos }}-${{ matrix.goarch }}"
           mkdir -p "$OUT_DIR"
           CGO_ENABLED=0 GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} \
-            go build -trimpath -ldflags "-s -w" -o "$OUT_DIR/$BIN_NAME" ./cmd/server/main.go
+            go build -trimpath -ldflags "-s -w" -o "$OUT_DIR/$BIN_NAME" .
 
       - name: Package archive
         run: |
-          OUT_DIR="dist/douban-api-go-${{ matrix.goos }}-${{ matrix.goarch }}"
+          OUT_DIR="cmd/server/dist/douban-api-go-${{ matrix.goos }}-${{ matrix.goarch }}"
           if [ "${{ matrix.archive }}" = "zip" ]; then
-            (cd dist && zip -r "douban-api-go-${{ matrix.goos }}-${{ matrix.goarch }}.zip" "douban-api-go-${{ matrix.goos }}-${{ matrix.goarch }}")
+            (cd cmd/server/dist && zip -r "douban-api-go-${{ matrix.goos }}-${{ matrix.goarch }}.zip" "douban-api-go-${{ matrix.goos }}-${{ matrix.goarch }}")
           else
-            tar -C dist -czf "dist/douban-api-go-${{ matrix.goos }}-${{ matrix.goarch }}.tar.gz" "douban-api-go-${{ matrix.goos }}-${{ matrix.goarch }}"
+            tar -C cmd/server/dist -czf "cmd/server/dist/douban-api-go-${{ matrix.goos }}-${{ matrix.goarch }}.tar.gz" "douban-api-go-${{ matrix.goos }}-${{ matrix.goarch }}"
           fi
 
       - name: Upload artifact
@@ -72,8 +73,8 @@ jobs:
         with:
           name: douban-api-go-${{ matrix.goos }}-${{ matrix.goarch }}
           path: |
-            dist/douban-api-go-${{ matrix.goos }}-${{ matrix.goarch }}.tar.gz
-            dist/douban-api-go-${{ matrix.goos }}-${{ matrix.goarch }}.zip
+            cmd/server/dist/douban-api-go-${{ matrix.goos }}-${{ matrix.goarch }}.tar.gz
+            cmd/server/dist/douban-api-go-${{ matrix.goos }}-${{ matrix.goarch }}.zip
           if-no-files-found: ignore
 
       - name: Upload to GitHub Release
@@ -81,8 +82,8 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            dist/douban-api-go-${{ matrix.goos }}-${{ matrix.goarch }}.tar.gz
-            dist/douban-api-go-${{ matrix.goos }}-${{ matrix.goarch }}.zip
+            cmd/server/dist/douban-api-go-${{ matrix.goos }}-${{ matrix.goarch }}.tar.gz
+            cmd/server/dist/douban-api-go-${{ matrix.goos }}-${{ matrix.goarch }}.zip
 
   docker:
     name: Build Docker Image
