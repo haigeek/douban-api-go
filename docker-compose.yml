@@ -1,3 +1,4 @@
+version: "3.9"
 services:
   douban-api-go:
     image: ghcr.io/haigeek/douban-api-go:latest
@@ -9,8 +10,6 @@ services:
       TZ: Asia/Shanghai
       DOUBAN_COOKIE: ${DOUBAN_COOKIE:-}
       DOUBAN_API_LIMIT_SIZE: ${DOUBAN_API_LIMIT_SIZE:-3}
-      BASIC_USER: ${BASIC_USER:-}
-      BASIC_PASS: ${BASIC_PASS:-}
     command:
       - /usr/bin/douban-api-go
       - --host
@@ -22,6 +21,6 @@ services:
       - --cookie
       - "${DOUBAN_COOKIE:-}"
       - --basic-user
-      - "${BASIC_USER:-}"
+      - "${BASIC_USER}"
       - --basic-pass
-      - "${BASIC_PASS:-}"
+      - "${BASIC_PASS}"
