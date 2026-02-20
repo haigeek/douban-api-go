@@ -1,0 +1,51 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Go: Debug API Server",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}/cmd/server",
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "DOUBAN_COOKIE": "",
+        "DOUBAN_API_LIMIT_SIZE": "3"
+      },
+      "args": [
+        "--debug",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "5002"
+        // "--basic-user",
+        // "admin",
+        // "--basic-pass",
+        // "pass1234"
+      ]
+    },
+    {
+      "name": "Go: Debug API Server (Custom Port)",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}/cmd/server",
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "DOUBAN_COOKIE": "",
+        "DOUBAN_API_LIMIT_SIZE": "3"
+      },
+      "args": [
+        "--debug",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "5002",
+        "--basic-user",
+        "admin",
+        "--basic-pass",
+        "pass1234"
+      ]
+    }
+  ]
+}
