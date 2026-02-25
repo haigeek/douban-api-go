@@ -18,9 +18,11 @@ import (
 )
 
 const (
-	originHeader  = "https://movie.douban.com"
-	refererHeader = "https://movie.douban.com/"
-	uaHeader      = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36"
+	movieOriginHeader   = "https://movie.douban.com"
+	movieRefererHeader  = "https://movie.douban.com/"
+	mobileOriginHeader  = "https://m.douban.com"
+	mobileRefererHeader = "https://m.douban.com/"
+	uaHeader            = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36"
 )
 
 var (
@@ -97,6 +99,7 @@ func (c *Client) get(ctx context.Context, rawURL string, query map[string]string
 		req.URL.RawQuery = q.Encode()
 	}
 
+	originHeader, refererHeader := requestHeaders(req.URL.Host)
 	req.Header.Set("Origin", originHeader)
 	req.Header.Set("Referer", refererHeader)
 	req.Header.Set("User-Agent", uaHeader)
@@ -194,4 +197,11 @@ func capture(re *regexp.Regexp, text string) string {
 		return ""
 	}
 	return strings.TrimSpace(m[1])
+}
+
+func requestHeaders(host string) (origin string, referer string) {
+	if strings.EqualFold(host, "m.douban.com") {
+		return mobileOriginHeader, mobileRefererHeader
+	}
+	return movieOriginHeader, movieRefererHeader
 }

@@ -31,6 +31,10 @@ func (h *Handlers) Index(c *gin.Context) {
        /v2/book/search?q={book_name}<br/>
        /v2/book/id/{sid}<br/>
        /v2/book/isbn/{isbn}<br/>
+       /v2/media/hot/tv?start=0&limit=20<br/>
+       /v2/media/hot/movie?start=0&limit=20<br/>
+       /v2/media/latest/movie?start=0&limit=20<br/>
+       /v2/media/high-rating/movie?start=0&limit=20<br/>
     `))
 }
 

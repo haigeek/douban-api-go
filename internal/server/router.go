@@ -4,9 +4,10 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/haigeek/douban-api-go/internal/book"
+	"github.com/haigeek/douban-api-go/internal/media"
 )
 
-func NewRouter(h *Handlers, b *book.Handlers, debug bool) *gin.Engine {
+func NewRouter(h *Handlers, b *book.Handlers, m *media.Handlers, debug bool) *gin.Engine {
 	if !debug {
 		gin.SetMode(gin.ReleaseMode)
 	}
@@ -30,6 +31,10 @@ func NewRouter(h *Handlers, b *book.Handlers, debug bool) *gin.Engine {
 	r.GET("/v2/book/search", b.Search)
 	r.GET("/v2/book/id/:sid", b.ByID)
 	r.GET("/v2/book/isbn/:isbn", b.ByISBN)
+	r.GET("/v2/media/hot/tv", m.HotTV)
+	r.GET("/v2/media/hot/movie", m.HotMovie)
+	r.GET("/v2/media/latest/movie", m.LatestMovie)
+	r.GET("/v2/media/high-rating/movie", m.HighRatingMovie)
 
 	return r
 }
